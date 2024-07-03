@@ -37,6 +37,7 @@ public class AutenticacionController {
     private UsuarioRepository usuarioRepository;
 
     @PostMapping(path = "/login")
+    @Operation(summary = "Inicia sesion para obtener el token de acceso a la API")
     public ResponseEntity autenticarUsuario(@RequestBody @Valid DatosAutenticacionUsuario datosAutenticacionUsuario){
         Authentication authToken = new UsernamePasswordAuthenticationToken(
                 datosAutenticacionUsuario.email(),
