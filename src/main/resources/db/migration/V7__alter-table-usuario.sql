@@ -1,0 +1,1 @@
+ALTER TABLE usuario MODIFY contrasena VARCHAR(100);
