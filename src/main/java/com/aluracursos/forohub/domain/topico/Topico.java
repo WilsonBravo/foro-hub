@@ -41,4 +41,11 @@ public class Topico {
         this.fechaCreacion= LocalDateTime.now();
         this.status=Status.ABIERTO;
     }
+
+    public void actualizarDatos(DatosRegistroTopico datosTopico, Usuario usuario, Curso curso) {
+        this.titulo = datosTopico.titulo();
+        this.mensaje = datosTopico.mensaje();
+        this.usuario = usuario;
+        this.curso = curso;
+    }
 }

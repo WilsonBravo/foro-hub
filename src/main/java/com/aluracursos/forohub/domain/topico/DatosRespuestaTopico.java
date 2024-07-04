@@ -9,4 +9,7 @@ public record DatosRespuestaTopico(
         String mensaje,
         LocalDateTime fechaCreacion
 ) {
+    public DatosRespuestaTopico(Topico topico) {
+        this(topico.getId(), topico.getTitulo(), topico.getMensaje(), topico.getFechaCreacion());
+    }
 }
