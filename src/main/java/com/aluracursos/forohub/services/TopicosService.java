@@ -7,6 +7,7 @@ import com.aluracursos.forohub.domain.topico.validaciones.ValidacionesTopicos;
 import com.aluracursos.forohub.domain.usuario.Usuario;
 import com.aluracursos.forohub.domain.usuario.UsuarioRepository;
 import com.aluracursos.forohub.infra.errores.ValidacionDeIntegridad;
+import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -79,5 +80,13 @@ public class TopicosService {
         Optional<Curso> curso = cursoRepository.findById(datosTopico.cursoId());
         topico.get().actualizarDatos(datosTopico, usuario.get(), curso.get());
         return new DatosRespuestaTopico(topico.get());
+    }
+
+    public void eliminarTopico(Long id) {
+        Optional<Topico> topico = topicoRepository.findById(id);
+        if (!topico.isPresent()){
+            throw new ValidationException("El tópico no existe");
+        }
+        topicoRepository.delete(topico.get());
     }
 }
