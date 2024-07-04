@@ -23,7 +23,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/auth")
-@Tag(name = "Autenticacion", description = "Obtiene el token para que el usuario asignado pueda comunicarse con la API")
+@Tag(name = "Autenticación", description = "Obtiene el token para que el usuario asignado pueda comunicarse con la API")
 public class AutenticacionController {
 
     @Autowired
@@ -37,7 +37,7 @@ public class AutenticacionController {
     private UsuarioRepository usuarioRepository;
 
     @PostMapping(path = "/login")
-    @Operation(summary = "Inicia sesion para obtener el token de acceso a la API")
+    @Operation(summary = "Inicia sesión para obtener el token de acceso a la API")
     public ResponseEntity autenticarUsuario(@RequestBody @Valid DatosAutenticacionUsuario datosAutenticacionUsuario){
         Authentication authToken = new UsernamePasswordAuthenticationToken(
                 datosAutenticacionUsuario.email(),

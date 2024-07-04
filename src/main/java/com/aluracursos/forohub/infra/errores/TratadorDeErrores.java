@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.NoSuchElementException;
+
 @RestControllerAdvice
 public class TratadorDeErrores {
 
@@ -18,19 +20,25 @@ public class TratadorDeErrores {
     public ResponseEntity tratarError404(){
         return ResponseEntity.notFound().build();
     }
-
+    @ExceptionHandler(NoSuchElementException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity itemError404(NoSuchElementException e){
+        return ResponseEntity.notFound().build();
+    }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity tratarError400(MethodArgumentNotValidException e){
         var errores = e.getFieldErrors().stream().map(DatosErrorValidacion::new).toList();
         return ResponseEntity.badRequest().body(errores);
     }
-
+    @ExceptionHandler(ValidacionDeIntegridad.class)
+    public ResponseEntity errorHandlerValidacionIntegridad(Exception e){
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity errorHandlerValidacionesDeNegocio(Exception e){
         return ResponseEntity.badRequest().body(e.getMessage());
     }
-
     private record DatosErrorValidacion(String campo, String error){
         public DatosErrorValidacion(FieldError error) {
             this(error.getField(), error.getDefaultMessage());
